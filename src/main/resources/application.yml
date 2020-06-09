@@ -10,8 +10,13 @@ spring:
     gateway:
       discovery:
         locator:
-          # 让gateway通过服务发现组件找到其他的微服务
+          # 璁ゞateway閫氳繃鏈嶅姟鍙戠幇缁勪欢鎵惧埌鍏朵粬鐨勫井鏈嶅姟
           enabled: true
+      routes:
+        - id: after_route
+          uri: lb://user-center
+          predicates:
+            - TimeBetween=涓婂崍9:00,涓嬪崍3:00
 management:
   endpoints:
     web:
@@ -20,3 +25,6 @@ management:
   endpoint:
     health:
       show-details: always
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
