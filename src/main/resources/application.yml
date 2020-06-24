@@ -12,14 +12,24 @@ spring:
         locator:
           # 让gateway通过服务发现组件找到其他的微服务
           enabled: true
+      #routes:
+      #  - id: uesr_route
+      #    uri: lb://user-center
+      #    predicates:
+      #     # - TimeBetween=上午9:00,下午10:00
+      #     - Path=/users/**
+      #   filters:
+      #      - AddRequestHeader=X-Request-Foo, Bar
+      #      - PreLog=a,b
       routes:
-        - id: after_route
+        - id: user_route
           uri: lb://user-center
           predicates:
-            - TimeBetween=上午9:00,下午10:00
-          filters:
-            - AddRequestHeader=X-Request-Foo, Bar
-            - PreLog=a,b
+            - Path=/users/**
+        - id: content_route
+          uri: lb://content-center
+          predicates:
+            - Path=/shares/**,/admin/**
 management:
   endpoints:
     web:
